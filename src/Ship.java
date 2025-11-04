@@ -1,22 +1,55 @@
 public class Ship {
-    private int length;
-    // if true = horizontal, otherwise vertical
-    private boolean placement;
+    private String name;
+    private int size;
+    private int startRow;
+    private int startCol;
+    private boolean horizontal;
+    private int hits;
 
-    public Ship(int length, boolean placement) {
-        this.length = length;
-        this.placement = placement;
+    public Ship(String name, int size) {
+        this.name = name;
+        this.size = size;
+        this.hits = 0;
     }
-    public int getLength() {
-        return length;
+
+    public boolean isHorizontal() {
+        return horizontal;
     }
-    public void setLength(int length) {
-        this.length = length;
+    public int getRow() {
+        return startRow;
     }
-    public boolean isPlacement() {
-        return placement;
+    public int getCol() {
+        return startCol;
     }
-    public void setPlacement(boolean placement) {
-        this.placement = placement;
+
+
+    public void placeShip(int row, int col, boolean horizontal) {
+        this.startRow = row;
+        this.startCol = col;
+        this.horizontal = horizontal;
+    }
+
+    public boolean isAtLocation(int row, int col) {
+        if (horizontal) {
+            return row == startRow && col >= startCol && col < startCol + size;
+        } else {
+            return col == startCol && row >= startRow && row < startRow + size;
+        }
+    }
+
+    public void hit() {
+        hits++;
+    }
+
+    public boolean isSunk() {
+        return hits >= size;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

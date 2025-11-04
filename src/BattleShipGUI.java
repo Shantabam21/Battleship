@@ -7,9 +7,9 @@ public class BattleShipGUI extends JFrame{
     JPanel mainPanel;
     JPanel gridPanel;
     JPanel quitButtonPnl;
-    Board board = new Board();
+
     JButton[][] buttons = new JButton[10][10];
-    Game game = new Game();
+    Game game = new Game(buttons);
 
 
     JButton quitButton = new JButton("Quit");
@@ -59,6 +59,28 @@ public class BattleShipGUI extends JFrame{
     class tileListener implements ActionListener {
         public void  actionPerformed(ActionEvent e) {
             JButton tile = (JButton) e.getSource();
+            int row = -1, col = -1;
+            for (int r = 0; r < 10; r++) {
+                for (int c = 0; c < 10; c++) {
+                    if (buttons[r][c] == tile) {
+                        row = r;
+                        col = c;
+                        break;
+                    }
+                }
+            }
+            if (row != -1 && col != -1) {
+                String result = game.fire(row, col);
+                if (result.equals("HIT")) {
+                    tile.setText("X");
+                    tile.setBackground(Color.RED);
+                } else {
+                    tile.setText("M");
+                    tile.setBackground(Color.YELLOW);
+                }
+                tile.setEnabled(false);
+
+            }
 
         }
     }
